@@ -1,6 +1,9 @@
 # UAV_SAC-PER
 
 ## Environment:
+The DRL framework is implemented using PyTorch (v2.3.1) with the Tianshou library, trained on an NVIDIA RTX 4070 GPU under Windows with Python 3.11.10. 
+
+## package:
 absl-py                 2.1.0
 aiohappyeyeballs        2.6.1
 aiohttp                 3.11.18
