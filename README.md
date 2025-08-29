@@ -1,6 +1,6 @@
 # UAV_SAC-PER
 
-##requirement
+## Environment:
 absl-py                 2.1.0
 aiohappyeyeballs        2.6.1
 aiohttp                 3.11.18
