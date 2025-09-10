@@ -195,13 +195,11 @@ class UAV_env:
         self.user_v_2D[:, 1] = new_vy
 
     def _get_observation(self):
-
         state = np.concatenate([
             self.UAV_pos_2D.flatten(),
             self.UAV_v_2D.flatten(),
             self.UAV_battery.flatten(),
             self.user_pos_2D.flatten(),
-            self.user_v_2D.flatten(),
             np.array([self.task_priorities]).flatten(),
         ])
 
@@ -213,13 +211,11 @@ class UAV_env:
 
     def _get_low_state(self):
         low_v = -np.ones((self.num_UAV, 2)) * self.v_uav_max
-        low_v_user = -np.ones((self.num_user, 2)) * self.v_user_max
         low_state = np.concatenate([
             np.array([self.x_min, self.y_min] * self.num_UAV),
             low_v.flatten(),
             np.zeros(self.num_UAV),
             np.zeros((self.num_user, 2)).flatten(),
-            low_v_user.flatten(),
             [0] * self.num_user
         ])
         return low_state
@@ -228,13 +224,11 @@ class UAV_env:
         max_v = np.ones(((self.num_UAV, 2))) * self.v_uav_max
         max_user = np.ones((self.num_user, 2)) * self.x_max
         max_uav = np.ones((self.num_UAV, 2)) * self.x_max
-        max_v_user = np.ones((self.num_user, 2)) * self.v_user_max
         high_state = np.concatenate([
             max_uav.flatten(),
             max_v.flatten(),
             np.ones(self.num_UAV) *energyOfUAV,
             max_user.flatten(),
-            max_v_user.flatten(),
             [1] * self.num_user
         ])
         return high_state
@@ -308,7 +302,8 @@ class UAV_env:
         sum_rate = np.zeros(self.num_user)
         for m in range(self.num_UAV):
             for k in range(self.num_user):
-                sum_rate[k] +=self.offload_strategy[k,m] * (1+self.task_priorities[k]) * self.compute_rate(k, m)
+                sum_rate[k] += (self.offload_strategy[k,m] * 
+                                ( 1 + self.task_priorities[k]) * self.compute_rate(k, m))
         return sum_rate
 
     def compute_rate(self, k, m):
@@ -436,13 +431,16 @@ class UAV_env:
 
         collision_penalty = 0.0
 
+        energy_penalty = 0.0
+
         #Set various penalties and penalty values according to the actual scenario
 
-        penalty =boundary_penalty + obstacle_penalty + collision_penalty
+        penalty =boundary_penalty + obstacle_penalty + collision_penalty + energy_penalty
 
         print(f'boundary_penalty: {boundary_penalty:.2f} | '
               f'obstacle_penalty: {obstacle_penalty:.2f} | '
-              f'collision_penalty: {collision_penalty:.2f} | ')
+              f'collision_penalty: {collision_penalty:.2f} | '
+              f'energy_penalty: {energy_penalty:.2f} | ')
 
         return penalty
 
@@ -486,9 +484,14 @@ class UAV_env:
         if self.step_num == self.Q:
             done = True
         if self.print_flag:
+            print('speed', self.UAV_v_2D)
             np.set_printoptions(precision=8, suppress=True)
-            print('uav_battery',self.UAV_battery)
-            print("\n", self.step_num, " -- reward: ", reward, "\n")
+            print('acceleration', self.UAV_a_2D)
+            print("flight energy:", self.E_fly)
+            print('remaining capacity', self.UAV_battery)
+            # print('prepos',self.UAV_previous_pos)
+            print("\n", self.step_num, " -- reward: ", reward, "\n",
+                  "UAV_pos", self.UAV_pos_2D, "\n")
 
         return self._get_observation(), reward, done, False, {}
 
