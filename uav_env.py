@@ -302,7 +302,7 @@ class UAV_env:
         sum_rate = np.zeros(self.num_user)
         for m in range(self.num_UAV):
             for k in range(self.num_user):
-                sum_rate[k] += (self.offload_strategy[k,m] * 
+                sum_rate[k] += (self.offload_strategy[k,m] *
                                 ( 1 + self.task_priorities[k]) * self.compute_rate(k, m))
         return sum_rate
 
