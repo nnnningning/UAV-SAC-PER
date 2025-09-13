@@ -24,7 +24,7 @@ except ImportError:
 
 def get_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--task", type=str, default="p1-per")
+    parser.add_argument("--task", type=str, default="SAC-per")
     parser.add_argument("--reward-threshold", type=float, default=None)
     parser.add_argument("--seed", type=int, default=2020)
     parser.add_argument("--buffer-size", type=int, default=500000)
@@ -214,3 +214,4 @@ def test_sac_with_il(args: argparse.Namespace = get_args()) -> None:
 if __name__ == '__main__':
 
     test_sac_with_il(args=get_args())
+
