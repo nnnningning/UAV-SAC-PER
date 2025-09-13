@@ -15,7 +15,7 @@ from tianshou.trainer import OffpolicyTrainer
 from tianshou.utils import TensorboardLogger
 from tianshou.utils.net.common import Net
 from tianshou.utils.net.continuous import Actor, ActorProb, Critic
-from onpolicy.envs.P1_env import UAV_env
+from onpolicy.envs.uav_env import UAV_env
 try:
     import envpool
 except ImportError:
@@ -212,4 +212,5 @@ def test_sac_with_il(args: argparse.Namespace = get_args()) -> None:
     # assert stop_fn(result.best_reward)
 
 if __name__ == '__main__':
+
     test_sac_with_il(args=get_args())
