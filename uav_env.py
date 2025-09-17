@@ -18,7 +18,7 @@ energyOfUAV = 20000 # J
 num_user = 15
 v_user_max = 10
 v_user_min = 2
-UAVmaxPower = 2
+UAVmaxPower = 0.5
 
 # nfz
 obstacle_num = 2
@@ -524,3 +524,4 @@ class UAV_env:
         self.E_fly = np.zeros(self.num_UAV)
 
         return self._get_observation(),{}
+
