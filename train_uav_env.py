@@ -26,7 +26,7 @@ def get_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--task", type=str, default="SAC-per")
     parser.add_argument("--reward-threshold", type=float, default=None)
-    parser.add_argument("--seed", type=int, default=2020)
+    parser.add_argument("--seed", type=int, default=2020) #2019，2020，2021
     parser.add_argument("--buffer-size", type=int, default=500000)
     parser.add_argument("--actor-lr", type=float, default=3e-4)
     parser.add_argument("--critic-lr", type=float, default=2e-4)
@@ -214,4 +214,5 @@ def test_sac_with_il(args: argparse.Namespace = get_args()) -> None:
 if __name__ == '__main__':
 
     test_sac_with_il(args=get_args())
+
 
