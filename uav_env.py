@@ -64,9 +64,9 @@ class UAV_env:
         self.UAV_pos = np.zeros((self.num_UAV, 3))
         self.UAV_pos_2D = np.zeros((self.num_UAV, 2))
 
-        self.UAV_pos[:, 0] = np.random.uniform(self.x_min + 10, self.x_max - 10, num_UAV).astype(float)  # x 坐标
+        self.UAV_pos[:, 0] = np.random.uniform(self.x_min + 10, self.x_max - 10, num_UAV).astype(float)  # x 
         self.UAV_pos_2D[:, 0] = self.UAV_pos[:, 0]
-        self.UAV_pos[:, 1] = np.random.uniform(self.y_min + 10, self.y_max - 10, num_UAV).astype(float)  # y 坐标
+        self.UAV_pos[:, 1] = np.random.uniform(self.y_min + 10, self.y_max - 10, num_UAV).astype(float)  # y 
         self.UAV_pos_2D[:, 1] = self.UAV_pos[:, 1]
         self.UAV_pos[:, 2] = self.H
 
@@ -524,4 +524,5 @@ class UAV_env:
         self.E_fly = np.zeros(self.num_UAV)
 
         return self._get_observation(),{}
+
 
